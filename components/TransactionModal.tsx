@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { TransactionType } from '../types';
 
@@ -7,12 +7,22 @@ interface TransactionModalProps {
   onClose: () => void;
   onSubmit: (amount: number, type: TransactionType, description: string) => void;
   debtorName: string;
+  initialType?: TransactionType;
 }
 
-const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, onSubmit, debtorName }) => {
+const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, onSubmit, debtorName, initialType = TransactionType.DEBT }) => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
-  const [activeTab, setActiveTab] = useState<TransactionType>(TransactionType.DEBT);
+  const [activeTab, setActiveTab] = useState<TransactionType>(initialType);
+
+  // Reset state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab(initialType);
+      setAmount('');
+      setDescription('');
+    }
+  }, [isOpen, initialType]);
 
   if (!isOpen) return null;
 

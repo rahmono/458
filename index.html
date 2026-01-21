@@ -2,9 +2,10 @@
 <html lang="tg">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daftar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Дафтар</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
       body {
@@ -12,6 +13,7 @@
         background-color: #ffffff;
         color: #18181b; /* zinc-900 */
         -webkit-font-smoothing: antialiased;
+        touch-action: manipulation; /* Prevents double-tap to zoom */
       }
       /* Minimalist scrollbar */
       ::-webkit-scrollbar {
@@ -24,6 +26,16 @@
         background-color: #e4e4e7;
         border-radius: 3px;
       }
+
+      /* 
+         CRITICAL: Prevent iOS causing zoom when focusing inputs < 16px.
+         We force 16px on mobile inputs. 
+      */
+      @media screen and (max-width: 768px) {
+        input, select, textarea {
+          font-size: 16px !important;
+        }
+      }
     </style>
   <script type="importmap">
 {
@@ -31,12 +43,22 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "cors": "https://esm.sh/cors@^2.8.5",
+    "path": "https://esm.sh/path@^0.12.7",
+    "url": "https://esm.sh/url@^0.11.4",
+    "express": "https://esm.sh/express@^5.2.1",
+    "dotenv": "https://esm.sh/dotenv@^17.2.3",
+    "mysql2/": "https://esm.sh/mysql2@^3.16.1/",
+    "uuid": "https://esm.sh/uuid@^13.0.0",
+    "node-telegram-bot-api": "https://esm.sh/node-telegram-bot-api@^0.67.0",
+    "crypto": "https://esm.sh/crypto@^1.0.1"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
